@@ -4,6 +4,7 @@ import strconv
 import aoc1
 import aoc2
 import aoc3
+import aoc4
 import utils
 
 struct TestData {
@@ -17,6 +18,7 @@ fn main() {
 	runners << aoc1.AOC1{}
 	runners << aoc2.AOC2{}
 	runners << aoc3.AOC3{}
+	runners << aoc4.AOC4{}
 
 	if os.args.len < 2 {
 		println('First argument should be day to run')
