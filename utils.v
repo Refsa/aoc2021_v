@@ -1,3 +1,5 @@
+module utils
+
 import strings.textscanner
 import strconv
 

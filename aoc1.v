@@ -1,9 +1,12 @@
+module aoc1
+
 import arrays
+import utils
 
 pub struct AOC1 { }
 
 pub fn (aoc AOC1) run_p1 (input []string) ?u64 {
-	parsed := cast(input)?
+	parsed := utils.cast(input)?
 
 	mut increases := 0
 	for w in arrays.window<int>(parsed, size: 2) {
@@ -16,7 +19,7 @@ pub fn (aoc AOC1) run_p1 (input []string) ?u64 {
 }
 
 pub fn (aoc AOC1) run_p2 (input []string) ?u64 {
-	parsed := cast(input)?
+	parsed := utils.cast(input)?
 
 	mut sums := []int{}
 	for w in arrays.window<int>(parsed, size: 3) {

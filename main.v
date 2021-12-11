@@ -1,6 +1,11 @@
 import os
 import strconv
 
+import aoc1
+import aoc2
+import aoc3
+import utils
+
 struct TestData {
 	p1 int
 	p2 int
@@ -9,8 +14,9 @@ struct TestData {
 
 fn main() {
 	mut runners := []Runner {}
-	runners << AOC1{}
-	runners << AOC2{}
+	runners << aoc1.AOC1{}
+	runners << aoc2.AOC2{}
+	runners << aoc3.AOC3{}
 
 	if os.args.len < 2 {
 		println('First argument should be day to run')
@@ -25,12 +31,10 @@ fn run_day(day int, runner Runner)? {
 	test_txt := './resources/day${day}_test.txt'
 	puzzle_txt := './resources/day${day}.txt'
 
-	println(test_txt)
-
 	test_input := os.read_lines(test_txt)?
 	input := os.read_lines(puzzle_txt)?
 
-	answers := split(test_input[0], ' '[0])
+	answers := utils.split(test_input[0], ' '[0])
 	test_data := TestData{
 		strconv.atoi(answers[0])?, 
 		strconv.atoi(answers[1])?, 

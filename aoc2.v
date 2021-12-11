@@ -1,5 +1,7 @@
-import arrays
+module aoc2
+
 import strconv
+import utils
 
 pub struct AOC2 { }
 
@@ -57,7 +59,7 @@ fn parse(input []string) ?[]Direction {
 	mut output := []Direction{}
 
 	for l in input {
-		lr := split(l, ' '[0])
+		lr := utils.split(l, ' '[0])
 		value := strconv.atoi(lr[1])?
 
 		item := match lr[0] {
