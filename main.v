@@ -10,6 +10,7 @@ struct TestData {
 fn main() {
 	mut runners := []Runner {}
 	runners << AOC1{}
+	runners << AOC2{}
 
 	if os.args.len < 2 {
 		println('First argument should be day to run')
