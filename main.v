@@ -117,9 +117,11 @@ fn get_test_input(day int) ?TestData {
 	test_input := os.read_lines(test_txt)?
 
 	answers := test_input[0].split(' ')
+	answer_p1 := strconv.parse_int(answers[0], 10, 64)?
+	answer_p2 := strconv.parse_int(answers[1], 10, 64)?
 	return TestData{
-		strconv.parse_int(answers[0], 10, 64)?, 
-		strconv.parse_int(answers[1], 10, 64)?, 
+		answer_p1,
+		answer_p2,
 		test_input[2..]
 	}
 }

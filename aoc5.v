@@ -41,9 +41,13 @@ fn parse(input []string) ?[]Line {
 
 	for line in input {
 		points := line.split(' -> ')
+
+		a := parse_point(points[0])?
+		b := parse_point(points[1])?
+
 		output << Line {
-			a: parse_point(points[0])?,
-			b: parse_point(points[1])?
+			a: a,
+			b: b
 		}
 	}
 
@@ -52,9 +56,13 @@ fn parse(input []string) ?[]Line {
 
 fn parse_point(input string) ?Point {
 	pos := input.split(',')
+
+	x := strconv.atoi(pos[0])?
+	y := strconv.atoi(pos[1])?
+
 	return Point {
-		x: strconv.atoi(pos[0])?,
-		y: strconv.atoi(pos[1])?
+		x: x,
+		y: y
 	}
 }
 

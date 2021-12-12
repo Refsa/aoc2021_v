@@ -32,7 +32,8 @@ fn gen_cost_p1(state []int, min int, max int) [][]int {
 	mut costs := [][]int{}
 
 	for j in min..max {
-		costs << state.map(util.iabs(it - j))
+		mapped := state.map(util.iabs(it - j))
+		costs << mapped
 	}
 
 	return costs
@@ -46,7 +47,8 @@ fn gen_cost_p2(state []int, min int, max int) [][]int {
 	mut costs := [][]int{}
 
 	for j in min..max {
-		costs << state.map(sum(util.iabs(it - j)))
+		mapped := state.map(sum(util.iabs(it - j)))
+		costs << mapped
 	}
 
 	return costs

@@ -45,7 +45,8 @@ fn parse(input []string) ?([]int, []Board) {
 	mut draws := []int{}
 
 	for d in input[0].split(',') {
-		draws << strconv.atoi(d)?
+		draw := strconv.atoi(d)?
+		draws << draw
 	}
 
 	mut boards := []Board{}

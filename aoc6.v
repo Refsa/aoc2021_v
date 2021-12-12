@@ -46,7 +46,8 @@ fn parse(input []string) ?[]u64 {
 	mut output := []u64{}
 
 	for l in input[0].split(',') {
-		output << strconv.parse_uint(l, 10, 64)?
+		val := strconv.parse_uint(l, 10, 64)?
+		output << val
 	}
 
 	return output
