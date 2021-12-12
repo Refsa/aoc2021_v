@@ -1,5 +1,7 @@
 import os
 import strconv
+import benchmark
+import term
 
 import aoc1
 import aoc2
@@ -8,7 +10,6 @@ import aoc4
 import aoc5
 import aoc6
 import aoc7
-import utils
 
 struct TestData {
 	p1 i64
@@ -27,49 +28,119 @@ fn main() {
 	runners << aoc7.AOC7{}
 
 	if os.args.len < 2 {
-		println('First argument should be day to run')
+		println(term.warn_message('First argument should be day to run'))
 		return
 	}
 
+	// Args
+	is_bench := os.args.len > 2 && os.args[2] == 'bench'
+	bench_runs := if os.args.len > 3 {
+		strconv.atoi(os.args[3])?
+	} else {
+		1_000
+	}
 	day := strconv.atoi(os.args[1])?
-	run_day(day, runners[day - 1])?
+
+	// Data
+	runner := runners[day - 1]
+	test_data := get_test_input(day)?
+	input := get_input(day)?
+	
+	term.clear()
+	// Part 1
+	{
+		println(term.header_left('Day $day - Part 1', '_'))
+		test_p1(test_data, runner) or {
+			println(term.fail_message('$err'))
+			return
+		}
+
+		if is_bench {
+			mut bench := benchmark.new_benchmark()
+			for _ in 0..bench_runs {
+				bench.step()
+				_ := runner.run_p1(input) or {
+					bench.fail()
+					continue
+				}
+				bench.ok()
+			}
+			print_bench(bench)
+		} else {
+			print_result(runner.run_p1(input)?)
+		}
+	}
+
+	println('')
+
+	// Part 2
+	{
+		println(term.header_left('Day $day - Part 2', '_'))
+		test_p2(test_data, runner) or {
+			println(term.fail_message('$err'))
+			return
+		}
+
+		if is_bench {
+			mut bench := benchmark.new_benchmark()
+			for _ in 0..bench_runs {
+				bench.step()
+				_ := runner.run_p2(input) or {
+					bench.fail()
+					continue
+				}
+				bench.ok()
+			}
+			print_bench(bench)
+		} else {
+			print_result(runner.run_p2(input)?)
+		}
+	}
 }
 
-fn run_day(day int, runner Runner)? {
+fn print_bench(bench benchmark.Benchmark) {
+	tot_dur := f64(bench.bench_timer.elapsed().microseconds() / bench.nok)
+	runs := term.green('$bench.nok')
+	dur := term.green('${tot_dur}µs')
+	println('Benchmark | Runs: $runs | Time: $dur')
+}
+
+fn print_result(result u64) {
+	label_c := term.bold('Result')
+	result_c := term.white('$result')
+
+	println('$label_c := $result_c')
+}
+
+fn get_test_input(day int) ?TestData {
 	test_txt := './resources/day${day}_test.txt'
-	puzzle_txt := './resources/day${day}.txt'
-
 	test_input := os.read_lines(test_txt)?
-	input := os.read_lines(puzzle_txt)?
 
-	answers := utils.split(test_input[0], ' '[0])
-	test_data := TestData{
+	answers := test_input[0].split(' ')
+	return TestData{
 		strconv.parse_int(answers[0], 10, 64)?, 
 		strconv.parse_int(answers[1], 10, 64)?, 
 		test_input[2..]
 	}
+}
 
-	{
-		test_answer := runner.run_p1(test_data.input)?
-		if test_answer != test_data.p1 {
-			println('P1 Test Failed | Got $test_answer - expected $test_data.p1')
-			return
-		}
-		println('P1 Test Success')
+fn get_input(day int) ?[]string {
+	puzzle_txt := './resources/day${day}.txt'
+	return os.read_lines(puzzle_txt)
+}
 
-		answer := runner.run_p1(input)?
-		println('P1 := $answer')
+fn test_p1(test_data TestData, runner Runner) ? {
+	test_answer := runner.run_p1(test_data.input)?
+	if test_answer != test_data.p1 {
+		return error('Test Failed | Got $test_answer - expected $test_data.p1')
 	}
+	println(term.ok_message('Test Success'))
+}
 
-	{
-		test_answer := runner.run_p2(test_data.input)?
-		if test_answer != test_data.p2 {
-			println('P2 Test Failed | Got $test_answer - expected $test_data.p2')
-			return
-		}
-		println('P2 Test Success')
-
-		answer := runner.run_p2(input)?
-		println('P2 := $answer')
+fn test_p2(test_data TestData, runner Runner) ? {
+	test_answer := runner.run_p2(test_data.input)?
+	if test_answer != test_data.p2 {
+		return error('Test Failed | Got $test_answer - expected $test_data.p2')
 	}
+	println(term.ok_message('Test Success'))
 }

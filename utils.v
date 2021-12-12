@@ -4,9 +4,9 @@ import strings.textscanner
 import strconv
 
 pub fn cast(arr []string) ?[]int {
-	mut ints := []int{}
-	for val in arr {
-		ints.insert(ints.len, strconv.atoi(val)?)
+	mut ints := []int{len: arr.len}
+	for i, val in arr {
+		ints[i] = strconv.atoi(val)?
 	}
 	return ints
 }

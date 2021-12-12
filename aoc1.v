@@ -7,9 +7,17 @@ pub struct AOC1 { }
 
 pub fn (aoc AOC1) run_p1 (input []string) ?u64 {
 	parsed := utils.cast(input)?
+	/* defer {
+		unsafe { parsed.free() }
+	} */
 
 	mut increases := 0
-	for w in arrays.window<int>(parsed, size: 2) {
+	windows := arrays.window<int>(parsed, size: 2)
+	/* defer {
+		unsafe { windows.free() }
+	} */
+
+	for w in windows {
 		if w[1] > w[0] {
 			increases += 1
 		}
