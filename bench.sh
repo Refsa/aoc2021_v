@@ -1,0 +1,1 @@
+v run ./build.vsh && ./target/aoc2020 $1 bench $2
