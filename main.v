@@ -3,30 +3,15 @@ import strconv
 import benchmark
 import term
 
-import aoc1
-import aoc2
-import aoc3
-import aoc4
-import aoc5
-import aoc6
-import aoc7
+import aoc
 
-struct TestData {
+pub struct TestData {
 	p1 i64
 	p2 i64
 	input []string
 }
 
 fn main() {
-	mut runners := []Runner {}
-	runners << aoc1.AOC1{}
-	runners << aoc2.AOC2{}
-	runners << aoc3.AOC3{}
-	runners << aoc4.AOC4{}
-	runners << aoc5.AOC5{}
-	runners << aoc6.AOC6{}
-	runners << aoc7.AOC7{}
-
 	if os.args.len < 2 {
 		println(term.warn_message('First argument should be day to run'))
 		return
@@ -42,7 +27,7 @@ fn main() {
 	day := strconv.atoi(os.args[1])?
 
 	// Data
-	runner := runners[day - 1]
+	runner := aoc.get_runner(day)?
 	test_data := get_test_input(day)?
 	input := get_input(day)?
 	
@@ -131,7 +116,7 @@ fn get_input(day int) ?[]string {
 	return os.read_lines(puzzle_txt)
 }
 
-fn test_p1(test_data TestData, runner Runner) ? {
+fn test_p1(test_data TestData, runner aoc.Runner) ? {
 	test_answer := runner.run_p1(test_data.input)?
 	if test_answer != test_data.p1 {
 		return error('Test Failed | Got $test_answer - expected $test_data.p1')
@@ -139,7 +124,7 @@ fn test_p1(test_data TestData, runner Runner) ? {
 	println(term.ok_message('Test Success'))
 }
 
-fn test_p2(test_data TestData, runner Runner) ? {
+fn test_p2(test_data TestData, runner aoc.Runner) ? {
 	test_answer := runner.run_p2(test_data.input)?
 	if test_answer != test_data.p2 {
 		return error('Test Failed | Got $test_answer - expected $test_data.p2')
