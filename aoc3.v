@@ -1,8 +1,6 @@
 module aoc3
 
 import bitfield
-import arrays
-import strconv
 
 pub struct AOC3 {}
 

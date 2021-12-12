@@ -1,6 +1,5 @@
 module aoc5
 
-import arrays
 import strconv
 import math
 import math.util

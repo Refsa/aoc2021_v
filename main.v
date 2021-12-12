@@ -6,11 +6,12 @@ import aoc2
 import aoc3
 import aoc4
 import aoc5
+import aoc6
 import utils
 
 struct TestData {
-	p1 int
-	p2 int
+	p1 i64
+	p2 i64
 	input []string
 }
 
@@ -21,6 +22,7 @@ fn main() {
 	runners << aoc3.AOC3{}
 	runners << aoc4.AOC4{}
 	runners << aoc5.AOC5{}
+	runners << aoc6.AOC6{}
 
 	if os.args.len < 2 {
 		println('First argument should be day to run')
@@ -40,8 +42,8 @@ fn run_day(day int, runner Runner)? {
 
 	answers := utils.split(test_input[0], ' '[0])
 	test_data := TestData{
-		strconv.atoi(answers[0])?, 
-		strconv.atoi(answers[1])?, 
+		strconv.parse_int(answers[0], 10, 64)?, 
+		strconv.parse_int(answers[1], 10, 64)?, 
 		test_input[2..]
 	}
 
