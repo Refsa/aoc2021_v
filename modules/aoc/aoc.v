@@ -8,6 +8,7 @@ import aoc.aoc5
 import aoc.aoc6
 import aoc.aoc7
 import aoc.aoc8
+import aoc.aoc9
 
 pub interface Runner {
 	run_p1([]string) ?u64
@@ -24,6 +25,7 @@ pub fn get_runner(day int) ?Runner {
 		6 { return aoc6.AOC6{} }
 		7 { return aoc7.AOC7{} }
 		8 { return aoc8.AOC8{} }
+		9 { return aoc9.AOC9{} }
 		else { return error('Runner for day $day not implemented') }
 	}
 }
