@@ -1,7 +1,7 @@
 #!/usr/bin/env -S v run
 
-if !exists('./target/') {
-	mkdir('./target/')?
+if !exists('./target/debug/') {
+	mkdir('./target/debug/')?
 }
-execute_or_panic('v -gc boehm -o ./target/aoc2020 .')
-println('Build Completed')
+execute_or_panic('v -gc boehm -o ./target/debug/aoc2020 .')
+println('Debug Build Completed')

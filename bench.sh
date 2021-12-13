@@ -1,1 +1,1 @@
-v run ./build.vsh && ./target/aoc2020 $1 bench $2
+v run ./release.vsh && ./target/release/aoc2020 $1 bench $2

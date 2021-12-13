@@ -1,1 +1,1 @@
-v run ./build.vsh && ./target/aoc2020 $1
+v run ./build.vsh && ./target/debug/aoc2020 $1
