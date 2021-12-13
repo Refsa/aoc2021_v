@@ -4,11 +4,7 @@ import strings.textscanner
 import strconv
 
 pub fn cast(arr []string) ?[]int {
-	mut ints := []int{len: arr.len}
-	for i, val in arr {
-		ints[i] = strconv.atoi(val)?
-	}
-	return ints
+	return arr.map(strconv.atoi(it)?)
 }
 
 pub fn split(input string, term u8) []string {

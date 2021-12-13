@@ -1,45 +1,22 @@
 module aoc1
 
 import arrays
-import utils
+import strconv
 
 pub struct AOC1 { }
 
 pub fn (aoc AOC1) run_p1 (input []string) ?u64 {
-	parsed := utils.cast(input)?
-	/* defer {
-		unsafe { parsed.free() }
-	} */
+	parsed := input.map(strconv.atoi(it)?)
 
-	mut increases := 0
-	windows := arrays.window<int>(parsed, size: 2)
-	/* defer {
-		unsafe { windows.free() }
-	} */
-
-	for w in windows {
-		if w[1] > w[0] {
-			increases += 1
-		}
-	}
-
-	return u64(increases)
+	increases := arrays.window<int>(parsed, size: 2).filter(it[1] > it[0])
+	return u64(increases.len)
 }
 
 pub fn (aoc AOC1) run_p2 (input []string) ?u64 {
-	parsed := utils.cast(input)?
+	parsed := input.map(strconv.atoi(it)?)
 
-	mut sums := []int{}
-	for w in arrays.window<int>(parsed, size: 3) {
-		sums.insert(sums.len, w[0] + w[1] + w[2])
-	}
+	sums := arrays.window<int>(parsed, size: 3).map(it[0] + it[1] + it[2])
+	increases := arrays.window<int>(sums, size: 2).filter(it[1] > it[0])
 
-	mut increases := 0
-	for w in arrays.window<int>(sums, size: 2) {
-		if w[1] > w[0] {
-			increases += 1
-		}
-	}
-
-	return u64(increases)
+	return u64(increases.len)
 }

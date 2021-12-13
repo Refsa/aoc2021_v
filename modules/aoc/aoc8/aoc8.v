@@ -3,16 +3,16 @@ module aoc8
 import math
 
 const (
-	zero = [0, 1, 2, 4, 5, 6]
-	one = [2, 5]
-	two = [0, 2, 3, 4, 6]
-	three = [0, 2, 3, 5, 6]
-	four = [1, 2, 3, 5]
-	five = [0, 1, 3, 5, 6]
-	six = [0, 1, 3, 4, 5, 6]
-	seven = [0, 2, 5]
-	eight = [0, 1, 2, 3, 4, 5, 6]
-	nine = [0, 1, 2, 3, 5, 6]
+	c_zero = [0, 1, 2, 4, 5, 6]
+	c_one = [2, 5]
+	c_two = [0, 2, 3, 4, 6]
+	c_three = [0, 2, 3, 5, 6]
+	c_four = [1, 2, 3, 5]
+	c_five = [0, 1, 3, 5, 6]
+	c_six = [0, 1, 3, 4, 5, 6]
+	c_seven = [0, 2, 5]
+	c_eight = [0, 1, 2, 3, 4, 5, 6]
+	c_nine = [0, 1, 2, 3, 5, 6]
 )
 
 pub struct AOC8 {}
@@ -54,16 +54,16 @@ pub fn (aoc AOC8) run_p2(input []string) ?u64 {
 
 fn to_digit(input []int) ?int {
 	match input {
-		zero { return 0 }
-		one { return 1 }
-		two { return 2 }
-		three { return 3 }
-		four { return 4 }
-		five { return 5 }
-		six { return 6 }
-		seven { return 7 }
-		eight { return 8 }
-		nine { return 9 }
+		c_zero { return 0 }
+		c_one { return 1 }
+		c_two { return 2 }
+		c_three { return 3 }
+		c_four { return 4 }
+		c_five { return 5 }
+		c_six { return 6 }
+		c_seven { return 7 }
+		c_eight { return 8 }
+		c_nine { return 9 }
 		else { return error('digit out of range') }
 	}
 }
