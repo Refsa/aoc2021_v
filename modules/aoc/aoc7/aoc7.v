@@ -11,10 +11,9 @@ pub fn (aoc AOC7) run_p1(input []string) ?u64 {
 	min := arrays.min(state)?
 	max := arrays.max(state)?
 
-	mut costs := gen_cost_p1(state, min, max).map(arrays.sum(it)?)
-	costs.sort()
+	cost := gen_cost_p1(state, min, max)
 	
-	return u64(costs[0])
+	return u64(cost)
 }
 
 pub fn (aoc AOC7) run_p2(input []string) ?u64 {
@@ -22,36 +21,41 @@ pub fn (aoc AOC7) run_p2(input []string) ?u64 {
 	min := arrays.min(state)?
 	max := arrays.max(state)?
 
-	mut costs := gen_cost_p2(state, min, max).map(arrays.sum(it)?)
-	costs.sort()
+	cost := gen_cost_p2(state, min, max)
 	
-	return u64(costs[0])
+	return u64(cost)
 }
 
-fn gen_cost_p1(state []int, min int, max int) [][]int {
-	mut costs := [][]int{}
+fn gen_cost_p1(state []int, min int, max int) int {
+	mut min_cost := 1 << 30
 
 	for j in min..max {
-		mapped := state.map(util.iabs(it - j))
-		costs << mapped
+		mut tot := 0
+		for s in state {
+			tot += util.iabs(s - j)
+		}
+		min_cost = util.imin(min_cost, tot)
 	}
 
-	return costs
+	return min_cost
 }
 
 fn sum(num int) int {
 	return (num * (num + 1)) / 2
 }
 
-fn gen_cost_p2(state []int, min int, max int) [][]int {
-	mut costs := [][]int{}
+fn gen_cost_p2(state []int, min int, max int) int {
+	mut min_cost := 1 << 30
 
 	for j in min..max {
-		mapped := state.map(sum(util.iabs(it - j)))
-		costs << mapped
+		mut tot := 0
+		for s in state {
+			tot += sum(util.iabs(s - j))
+		}
+		min_cost = util.imin(min_cost, tot)
 	}
 
-	return costs
+	return min_cost
 }
 
 fn parse(input []string) ?[]int {

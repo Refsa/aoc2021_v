@@ -7,12 +7,6 @@ pub struct AOC3 {}
 pub fn (aoc AOC3) run_p1 (input []string) ?u64 {
 	parsed := parse(input)?
 
-	defer {
-		for p in parsed {
-			unsafe { p.free() }
-		}
-	}
-
 	mut gamma := bitfield.new(parsed[0].get_size())
 
 	len := parsed[0].get_size()

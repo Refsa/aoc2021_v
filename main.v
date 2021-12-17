@@ -1,6 +1,7 @@
 import os
 import strconv
 import benchmark
+import time
 import term
 
 import aoc
@@ -27,9 +28,18 @@ fn main() {
 	day := strconv.atoi(os.args[1])?
 
 	// Data
-	runner := aoc.get_runner(day)?
-	test_data := get_test_input(day)?
-	input := get_input(day)?
+	runner := aoc.get_runner(day) or {
+		println(term.fail_message('$err'))
+		return
+	}
+	test_data := get_test_input(day) or {
+		println(term.fail_message('$err'))
+		return
+	}
+	input := get_input(day) or {
+		println(term.fail_message('$err'))
+		return
+	}
 	
 	term.clear()
 	// Part 1
@@ -84,10 +94,30 @@ fn main() {
 }
 
 fn print_bench(bench benchmark.Benchmark) {
-	tot_dur := f64(bench.bench_timer.elapsed().microseconds() / bench.nok)
+	tot_dur := format_time(bench.bench_timer, bench.nok)
 	runs := term.green('$bench.nok')
-	dur := term.green('${tot_dur}µs')
+	dur := term.green('${tot_dur}')
 	println('Benchmark | Runs: $runs | Time: $dur')
+}
+
+fn format_time(sw time.StopWatch, div int) string {
+	mut tot_dur := f64(sw.elapsed().nanoseconds()) / f64(div)
+	mut w := 0
+	for tot_dur > 1000.0 {
+		w += 1
+		tot_dur /= 1000.0
+		if w == 3 {
+			break
+		}
+	}
+	id := match w {
+		0 {'ns'}
+		1 {'µs'}
+		2 {'ms'}
+		else {'s'}
+	}
+
+	return '${tot_dur:4.2f}${id}'
 }
 
 fn print_result(result u64) {
